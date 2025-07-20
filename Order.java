@@ -30,12 +30,15 @@ public class Order {
     }
 
     public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Order))
+			return false;
         if (this == obj)
             return true;
         Order order = (Order)obj;
         
         return this.orderId.equals(order.getOrderId());
     }
+	
     public String toString() {
         // Order[id=O001, product=Laptop, quantity=2, date=2025-06-28]
         return "Order[id=" + this.orderId

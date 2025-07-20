@@ -23,8 +23,9 @@ public class Customer {
         return email;
     }
     
-    @Override
     public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Customer))
+            return false;
         if (this == obj)
             return true;
         Customer customer = (Customer)obj;
@@ -33,7 +34,6 @@ public class Customer {
             && this.name.equals(customer.name);
     }
     
-    @Override
     public String toString() {
         return "Customer:[id=" + this.id 
                 + ", name=" + this.name

@@ -1,6 +1,6 @@
 
 import java.lang.classfile.instruction.ThrowInstruction;
-import java.time.LocalDateTime; // for date
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ECommerceManager {
@@ -59,8 +59,13 @@ public class ECommerceManager {
     }
 
     public Product[] getAllProduct() {
-
-        return this.products;
+		// return a new array that only has products
+		Product[] allProducts = new Product[productCount]
+		for (int i = 0; i < productCount; i++)
+		{
+			allProducts[i] = products[i];
+		}
+		return allProducts;
     }
 
     public boolean placeOrder(String custId, String productId, int quantity) {
@@ -88,7 +93,7 @@ public class ECommerceManager {
             id = "ORD" + idNum;
             if (orderCount == 0)
                 break;
-            // if the current orderid somehow exists (e.g. we deleted a previous order)
+            // if the current orderid somehow exists (e.g. we deleted a previous order & added this)
             // then incremement idNum and try again until we don't have a duplicate
             if (orders[orderCount - 1].getOrderId().equals(id))
                 idNum += 1;
@@ -96,15 +101,81 @@ public class ECommerceManager {
                 break;
         }
         this.orders[orderCount] = new Order(id, customer, product, quantity, date);
+		product.reduceStock(quantity);
+		orderCount++;
         return true;
     }
     public boolean cancelOrder(String orderId) {
-
+		for (int i = 0; i < orderCount; i++)
+		{
+			if (orders[i].getOrderId().equals(orderId))
+			{
+				// return stock to product
+				orders[i].getProduct().reduceStock(-orders[i].getQuantity());
+				// shift up orders
+				for (int j = i; j < orderCount - 1; j++)
+				{
+					orders[j] = orders[j + 1];
+				}
+				orders[orderCount - 1] = null;
+				orderCount--;
+				return true;
+			}
+		}
+		return false;
     }
+	
     public Product[] searchProductsByCategory(String category) {
-
+		int count = 0;
+		for (int i = 0; i < productCount; i++)
+		{
+			if (products[i].getCategory().equals(category))
+				count++;
+		}
+		Product[] searchResult = new Product[count];
+		int x = 0;
+		for (int i = 0; i < productCount; i++)
+		{
+			if (products[i].getCategory().equals(category))
+			{
+				searchResult[x] = products[i];
+				x++;
+			}
+		}
+		return searchResult;
     }
-    public String toString() {
 
+    public String toString() {
+		String output;
+		output = "==== Start of ECommerceManager ====";
+		output += "\n";
+
+		output += "=== Customers ==="
+		output += "\n"
+		for (int i = 0; i < customerCount; i++)
+		{
+			output += customers[i].toString();
+			output += "\n";
+		}
+
+		output += "=== Products ==="
+		output += "\n"
+		for (int i = 0; i < productCount; i++)
+		{
+			output += products[i].toString();
+			output += "\n";
+		}
+
+		output += "=== Orders ==="
+		output += "\n"
+		for (int i = 0; i < orderCount; i++)
+		{
+			output += orders[i].toString();
+			output += "\n";
+		}
+
+		output += "==== End of ECommerceManager ====";
+		output += "\n";
+		return output;
     }
 }
