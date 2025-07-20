@@ -127,6 +127,8 @@ public class StudentAssertionTest {
 
 	// Extra checks 
     public static void testExtraCustomer() {
+        Customer customer1 = new Customer("C001", "Alice", "alice@example.com");
+
 		// equals() -- null check
 		assert !customer1.equals(null) : "(extra): Customer should not be equal to null";
 
@@ -164,7 +166,8 @@ public class StudentAssertionTest {
 
     public static void testExtraOrder() {
 		Customer customer = new Customer("C001", "Alice", "alice@example.com");
-        Order order = new Order("O001", customer, product, 2, "2025-06-28");
+        Product product = new Product("P001", "Laptop", "Electronics", 2500.0, 15);
+        Order order1 = new Order("O001", customer, product, 2, "2025-06-28");
 
 		// equals() -- null object
         assert !order1.equals(null) : "(extra): Order should not be equal to null";
@@ -251,7 +254,7 @@ public class StudentAssertionTest {
 
         // searchProductsByCategory -- existing category
         Product[] electronics = manager.searchProductsByCategory("Electronics");
-        assert electronics.length == 1 : "(extra): Electronics category search failed (expected 1, got " + electronics.length + ")"
+        assert electronics.length == 1 : "(extra): Electronics category search failed (expected 1, got " + electronics.length + ")";
         assert electronics[0].equals(p1) : "(extra): Electronics search content mismatch"; // Should be P001
         
 		// searchProductsByCategory -- another existing category
