@@ -1,0 +1,57 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+public class Product {
+    private String productId;
+    private String prodDesc;
+    private String category;
+    private double price;
+    private int stockQty;
+    
+    public Product(String id, String desc, String category, double price, int qty) {
+        this.productId = id;
+        this.prodDesc = desc;
+        this.category = category;
+        this.price = price;
+        this.stockQty = qty;
+    }
+    public String getProductId() {
+        return this.productId;
+    }
+    public String getProdDesc() {
+        return this.prodDesc;
+    }
+    public String getCategory() {
+        return this.category;
+    }
+    public double getPrice() {
+        return this.price;
+    }
+    public int getStockQty() {
+        return this.stockQty;
+    }
+    public void reduceStock(int qty) {
+        this.stockQty -= qty;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj instanceof Product)
+            return false;
+        if (this == obj)
+           return true;
+        Product product = (Product)obj;
+
+        return this.productId.equals(product.productId);
+    }
+
+    @Override
+    public String toString() {
+        return "Product[id=" + this.productId
+                + ", Description=" + this.prodDesc
+                + ", price=" + this.price
+                + ", stock=" + this.stockQty + "]";
+    }
+}
