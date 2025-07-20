@@ -29,13 +29,11 @@ public class Customer {
         if (this == obj)
             return true;
         Customer customer = (Customer)obj;
-        return this.id.equals(customer.id)
-            && this.email.equals(customer.email)
-            && this.name.equals(customer.name);
+        return this.id.equals(customer.id);
     }
     
     public String toString() {
-        return "Customer:[id=" + this.id 
+        return "Customer[id=" + this.id 
                 + ", name=" + this.name
                 + ", email=" + this.email + "]";
     }

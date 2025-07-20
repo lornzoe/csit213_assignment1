@@ -33,12 +33,14 @@ public class Product {
         return this.stockQty;
     }
     public void reduceStock(int qty) {
+        // stockQty shouldn't be able to go to negative
+        if (this.stockQty < qty)
+            return;
         this.stockQty -= qty;
     }
     
-    @Override
     public boolean equals(Object obj) {
-        if (obj == null || obj instanceof Product)
+        if (obj == null || !(obj instanceof Product))
             return false;
         if (this == obj)
            return true;
@@ -47,7 +49,6 @@ public class Product {
         return this.productId.equals(product.productId);
     }
 
-    @Override
     public String toString() {
         return "Product[id=" + this.productId
                 + ", Description=" + this.prodDesc

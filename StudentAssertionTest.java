@@ -124,7 +124,23 @@ public class StudentAssertionTest {
 		
         System.out.println("All ECommerceManager assertions passed.");
 	}
+
+    public static void testExtraCustomer() {
+
+    }
 	
+    public static void testExtraProduct() {
+
+    }
+
+    public static void testExtraOrder() {
+
+    }
+
+    public static void testExtraECommerceManager() {
+        
+    }
+
 	private static void run() {
 		
 		if(testAssertionEnabled()) {

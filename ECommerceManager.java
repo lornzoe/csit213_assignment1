@@ -1,5 +1,4 @@
 
-import java.lang.classfile.instruction.ThrowInstruction;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,6 +26,12 @@ public class ECommerceManager {
     public boolean addCustomer(Customer c) {
         if (customerCount >= 100)
             return false;
+        // if customer is already in, don't add
+        for (int i = 0; i < customerCount; i++)
+        {
+            if (this.customers[i].equals(c))
+                return false;
+        }
         this.customers[customerCount] = c;
         customerCount++;
         return true;
@@ -35,6 +40,12 @@ public class ECommerceManager {
     public boolean addProduct(Product p) {
         if (productCount >= 100)
             return false;
+        // if product is already in, don't add
+        for (int i = 0; i < productCount; i++)
+        {
+            if (this.products[i].equals(p))
+                return false;
+        }
         this.products[productCount] = p;
         productCount++;
         return true;
@@ -60,7 +71,7 @@ public class ECommerceManager {
 
     public Product[] getAllProduct() {
 		// return a new array that only has products
-		Product[] allProducts = new Product[productCount]
+		Product[] allProducts = new Product[productCount];
 		for (int i = 0; i < productCount; i++)
 		{
 			allProducts[i] = products[i];
@@ -69,7 +80,7 @@ public class ECommerceManager {
     }
 
     public boolean placeOrder(String custId, String productId, int quantity) {
-        if (orderCount <= 100)
+        if (orderCount >= 100)
             return false;
         if (quantity <= 0 || quantity > maxItemsPerOrder)
             return false;
@@ -150,24 +161,24 @@ public class ECommerceManager {
 		output = "==== Start of ECommerceManager ====";
 		output += "\n";
 
-		output += "=== Customers ==="
-		output += "\n"
+		output += "=== Customers ===";
+		output += "\n";
 		for (int i = 0; i < customerCount; i++)
 		{
 			output += customers[i].toString();
 			output += "\n";
 		}
 
-		output += "=== Products ==="
-		output += "\n"
+		output += "=== Products ===";
+		output += "\n";
 		for (int i = 0; i < productCount; i++)
 		{
 			output += products[i].toString();
 			output += "\n";
 		}
 
-		output += "=== Orders ==="
-		output += "\n"
+		output += "=== Orders ===";
+		output += "\n";
 		for (int i = 0; i < orderCount; i++)
 		{
 			output += orders[i].toString();
