@@ -1,4 +1,3 @@
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -106,7 +105,16 @@ public class ECommerceManager {
                 break;
             // if the current orderid somehow exists (e.g. we deleted a previous order & added this)
             // then incremement idNum and try again until we don't have a duplicate
-            if (orders[orderCount - 1].getOrderId().equals(id))
+            boolean dupeCheck = false;
+            for (int i = 0; i < orderCount; i++)
+            {
+                if (orders[i].getOrderId().equals(id))
+                {
+                    dupeCheck = true;
+                    break;
+                }
+            }
+            if (dupeCheck)
                 idNum += 1;
             else
                 break;
@@ -116,6 +124,7 @@ public class ECommerceManager {
 		orderCount++;
         return true;
     }
+
     public boolean cancelOrder(String orderId) {
 		for (int i = 0; i < orderCount; i++)
 		{

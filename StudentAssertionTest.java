@@ -19,7 +19,12 @@ public class StudentAssertionTest {
 		assert customer1.toString().equals(expectedString) : "toString output mismatch";
 
 		//add in more test cases on your own....
-		
+        try {
+            testExtraCustomer();
+        } catch (AssertionError e) {
+            throw (e);
+        }
+
 		System.out.println("All Customer assertions passed.");
 	}
 	
@@ -47,7 +52,12 @@ public class StudentAssertionTest {
         assert product.toString().equals(expected) : "toString output mismatch";
 
 		//add in more test cases on your own....
-		
+        try {
+            testExtraProduct();
+        } catch (AssertionError e) {
+            throw (e);
+        }
+
         System.out.println("All Product assertions passed.");
         
     }   
@@ -74,7 +84,11 @@ public class StudentAssertionTest {
         assert order.toString().equals(expected) : "toString output mismatch";
 
 		//add in more test cases on your own....
-		
+				try {
+            testExtraOrder();
+        } catch (AssertionError e) {
+            throw (e);
+        }
 		
         System.out.println("All Order assertions passed.");
     }
@@ -121,7 +135,12 @@ public class StudentAssertionTest {
         assert output.contains("=== Orders ===") : "Missing orders section";
 
 		//add in more test cases on your own....
-		
+		try {
+            testExtraECommerceManager();
+        } catch (AssertionError e) {
+            throw (e);
+        }
+
         System.out.println("All ECommerceManager assertions passed.");
 	}
 
@@ -137,8 +156,6 @@ public class StudentAssertionTest {
 
 		// equals() -- self test
 		assert customer1.equals(customer1): "(extra): Product should be equal to itself";
-
-		System.out.println("All extra Customer assertions passed.");
 	}
 	
     public static void testExtraProduct() {
@@ -160,8 +177,6 @@ public class StudentAssertionTest {
 
 		// equals() -- self test
 		assert product1.equals(product1) : "(extra): Product should be equal to itself";
-	
-		System.out.println("All extra Product assertions passed.");
 	}
 
     public static void testExtraOrder() {
@@ -177,8 +192,6 @@ public class StudentAssertionTest {
 
 		// equals() -- self test
 		assert order1.equals(order1) : "(extra): Order should be equal to itself";
-		
-		System.out.println("All extra Order assertions passed.");
     }
 
     public static void testExtraECommerceManager() {
@@ -252,14 +265,27 @@ public class StudentAssertionTest {
         // cancelOrder -- non-existent order (should return false)
         assert !manager.cancelOrder("doesnotexist") : "(extra): Should not cancel non-existent order";
 
+        // placeOrder -- verify placeorder uniqueIDs
+        // my placeOrder creates unique order numbers starting from orderCount + 1,
+        // so this check relies on making sure ORD3 isn't created in this test and ORD6 is created instead
+		Product p3 = new Product("P003", "Java Book", "Books", 50.0, 30);
+        manager.addProduct(p3);
+        assert manager.placeOrder("C001", "P003", 7) : "(extra): Book order failed"; // ORD3
+        assert manager.placeOrder("C001", "P003", 8) : "(extra): Book order failed"; // ORD4
+        assert manager.placeOrder("C001", "P003", 9) : "(extra): Book order failed"; // ORD5
+        assert manager.cancelOrder("ORD3") : "(extra): Failed to cancel ORD3"; // Book order with quantity 7
+        assert manager.placeOrder("C001", "P003", 7) : "(extra): Book order failed"; // ORD6
+        String check = manager.toString();
+        assert !check.contains("ORD3") : "(extra): ORD3 was not removed";
+        assert check.contains("ORD6") : "(extra): ORD6 was not added";
+        assert check.contains("quantity=7") : "(extra): ORD6 with quantity 7 was not added"; // ORD6 is the only one with quantity of 7
+
         // searchProductsByCategory -- existing category
         Product[] electronics = manager.searchProductsByCategory("Electronics");
         assert electronics.length == 1 : "(extra): Electronics category search failed (expected 1, got " + electronics.length + ")";
         assert electronics[0].equals(p1) : "(extra): Electronics search content mismatch"; // Should be P001
         
 		// searchProductsByCategory -- another existing category
-		Product p3 = new Product("P003", "Java Book", "Books", 50.0, 30);
-        manager.addProduct(p3);
         Product[] books = manager.searchProductsByCategory("Books");
         assert books.length == 1 : "(extra): Books category search failed";
         assert books[0].equals(p3) : "(extra): Books search content mismatch";
@@ -269,7 +295,7 @@ public class StudentAssertionTest {
         assert food.length == 0 : "(extra): Search for non-existent category should return empty array";
 
         // toString check
-		// this contains the orders section that was not initially tested 
+		// *this contains an Orders section that was not in the initial tests 
         String output = manager.toString();
         assert output.contains("=== Customers ===") : "(extra): Missing customers section in toString";
         assert output.contains("=== Products ===") : "(extra): Missing products section in toString";
@@ -277,8 +303,6 @@ public class StudentAssertionTest {
         assert output.contains("Customer[id=C001, name=Alice, email=alice@test.com]") : "(extra): toString missing C001";
         assert output.contains("Product[id=P001, Description=Smartphone, price=999.99, stock=10]") : "(extra): toString missing P001";
         assert output.contains("Order[id=ORD2, product=Headphones, quantity=5, date=") : "(extra): toString missing ORD2";
-		
-		System.out.println("All extra ECommerceManager assertions passed.");
 	}
 
 	private static void run() {
@@ -286,28 +310,24 @@ public class StudentAssertionTest {
 		if(testAssertionEnabled()) {
 			try {
 				testCustomer();
-				testExtraCustomer();
 			}catch(AssertionError ex) {
 				System.out.println("Customer test failed:"+ex);
 			}
 			
 			try {
 				testProduct();
-				testExtraProduct();
 			}catch(AssertionError ex) {
 				System.out.println("Product test failed:"+ex);
 			}
 			
 			try {
 				testOrder();
-				testExtraOrder();
 			}catch(AssertionError ex) {
 				System.out.println("Order test failed:"+ex);
 			}
 			
 			try {
 				testECommerceManager();
-				testExtraECommerceManager();
 			}catch(AssertionError ex) {
 				System.out.println("ECommerceManager test failed:"+ex);
 			}
