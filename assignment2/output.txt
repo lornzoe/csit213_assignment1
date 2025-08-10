@@ -1,0 +1,5 @@
+Assertions are enabled.
+All assertions passed for Person class.
+All assertions passed for Candidate class.
+All assertions passed for Party class.
+All assertions passed for ElectionCommission class.

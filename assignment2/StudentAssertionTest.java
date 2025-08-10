@@ -82,6 +82,27 @@ public class StudentAssertionTest {
 		assert party.getCandidates().get("Hougang").size() == 1 : "Hougang Candidate list size mismatch";
 		assert party.getCandidates().get("Tampines").size() == 3 : "Tampines Candidate list size mismatch";
 
+		//add in more error test cases.....
+		// SMC-GRC mixing
+		Candidate c5 = new Candidate("Candidate 5", "S5555555A", "Male", "1975-06-15", "Vision Party", "Tampines",
+				"SMC");
+		party.addCandidate(c5);
+		assert party.getCandidates().get("Tampines").size() == 3 : "Tampines Candidate list size mismatch";
+
+		// Duplicate NRIC
+		Candidate c6 = new Candidate("Fake Candidate", "S1111111A", "Male", "1975-06-15", "Vision Party", "False Place",
+		"SMC");
+		party.addCandidate(c6);
+		assert !party.getCandidates().containsKey("False Place") : "False Place exists";
+
+		// >1 SMC candidate in same const
+		Candidate c7 = new Candidate("Candidate 7", "S7777777C", "Male", "1980-03-22", "Vision Party", "Hougang",
+		"SMC");
+		party.addCandidate(c7);
+		assert party.getCandidates().get("Hougang").size() == 1 : ">1 SMC in Hougang Const.";
+
+		//party.listCandidates();
+
 		System.out.println("All assertions passed for Party class.");
 	}
 

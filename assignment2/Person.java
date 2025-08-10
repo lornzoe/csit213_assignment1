@@ -1,16 +1,16 @@
 public class Person
 {
-    public String name;
-    public String nric;
-    public String gender;
-    public String dateOfBirth;
+    private String name;
+    private String nric;
+    private String gender;
+    private String dateOfBirth;
     
-    public Person(String n, String nr, String g, String dob) 
+    public Person(String name, String nric, String gender, String dateOfBirth) 
     {
-        this.name = n;
-        this.nric = nr;
-        this.gender = g;
-        this.dateOfBirth = dob;
+        this.name = name;
+        this.nric = nric;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getName()
@@ -36,6 +36,6 @@ public class Person
     @Override
     public String toString()
     {
-        return "";
+        return name + " (" + nric + ")";
     }
 }
