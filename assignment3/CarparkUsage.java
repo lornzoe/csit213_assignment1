@@ -44,16 +44,19 @@ public class CarparkUsage {
 
     @Override
     public boolean equals(Object o) {
-        if (this == obj)
+        if (this == o)
             return true;
         if (!(o instanceof CarparkUsage))
             return false;
-        CarparkUsage obj = (CarparkUsage) o
-        return (this.carkparkName.equals(obj.carkparkName) && this.usageDate.equals(obj.usageDate));
+        CarparkUsage obj = (CarparkUsage) o;
+        return (this.carparkName.equals(obj.carparkName)
+            && this.usageDate.equals(obj.usageDate)
+            && this.zone.equals(obj.zone)
+            && this.occupiedRate == obj.occupiedRate);
     }
 
     @Override
     public String toString() {
-        return usageDate + ", " + carparkName + ", " + zone + ", " + occupiedRate;
+        return usageDate + " " + carparkName + " " + zone + " " + occupiedRate;
     }
 }

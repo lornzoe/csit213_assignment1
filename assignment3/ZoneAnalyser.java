@@ -9,7 +9,7 @@ public class ZoneAnalyser implements Analyser {
         for (CarparkUsage usage : data) {
             String zone = usage.getZone();
             totals.put(zone, totals.getOrDefault(zone, 0.0) + usage.getOccupiedRate());
-            counts.put(zone, counts.getOrDefault(zone, 0) + 1);
+            counts.put(zone, counts.getOrDefault(zone, 0.0) + 1.0);
         }
 
         HashMap<String, Double> averages = new HashMap<>();

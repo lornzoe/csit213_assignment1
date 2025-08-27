@@ -36,7 +36,21 @@ public class StudentAssertionTest {
 			}
 			
 			//write more test cases on your own here.....
-
+			// System.out.println("-- testing usage1");
+			// CarparkStat stat = new CarparkStat();
+			// ArrayList<String> errors = stat.load("usage1.txt");
+			// for (String line : errors)
+			// {
+			// 	System.out.println(line);
+			// }
+			
+			// System.out.println("-- testing usage2");
+			// CarparkStat stat2 = new CarparkStat();
+			// ArrayList<String> errors2 = stat2.load("usage2.txt");
+			// for (String line : errors2)
+			// {
+			// 	System.out.println(line);
+			// }
 		}
 
 	}

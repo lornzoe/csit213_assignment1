@@ -1,8 +1,8 @@
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CarparkStat {
     private ArrayList<CarparkUsage> usageData;
@@ -13,7 +13,7 @@ public class CarparkStat {
         error = new ArrayList<>();
     }
 
-    public ArrayList<String> load(String filePath) {
+    public ArrayList<String> load(String filename) {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -29,13 +29,15 @@ public class CarparkStat {
                         parts[0].trim(), // date
                         Double.parseDouble(parts[3].trim()) // occupiedRate
                     );
-                    if (!usageData.contains(usage)) {
+                    // valid record so far
+                    if (!usageData.contains(usage)) { // contain method uses equal, we're hoping to catch dupe with this
                         usageData.add(usage);
                     }
-                } catch (CarparkDataException e) {
+                    else {
+                        error.add("Invalid record (duplicate entry): " + usage.toString());
+                    }
+                } catch (CarparkDataException | NumberFormatException e) {
                     error.add("Invalid record: " + line + " (" + e.getMessage() + ")");
-                } catch (NumberFormatException e) {
-                    error.add("Invalid record: " + line + " (" + e.getMessage() + ")", e);
                 }
             }
         } catch (IOException e) {
@@ -44,8 +46,8 @@ public class CarparkStat {
         return error;
     }
 
-    public int getSize() {
-        return usageData.count();
+    public int size() {
+        return usageData.size();
     }
 
     public HashMap<String, Double> process(Analyser analyser) {
